@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,10 +20,11 @@ namespace PikaLoveBot
     public class Telegram
     {
         public static List<UserProfile> _base = new List<UserProfile>();
-        public static readonly TelegramBotClient Bot = new TelegramBotClient("596652430:AAFjpy2bjLfS2wW9i1qICXDNGgIf6HI-81o");
+        public static TelegramBotClient Bot;
         public static List<string> AllTownsList = new List<string>();
         public static void BotStart()
         {
+            Bot = new TelegramBotClient(MainFormPikaLoveBot.api_key_telegram);
             System.IO.File.Delete("photo.jpg");
             XDocument xdoc = XDocument.Load("base-last.xml");
             foreach (XElement x in xdoc.Element("base").Elements())
@@ -47,11 +49,9 @@ namespace PikaLoveBot
             Telegram.Log("Bot Stared " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second);
             Bot.StartReceiving(Array.Empty<UpdateType>());
         }
-
-        private static async void BotOnReceiveError(object sender, ReceiveErrorEventArgs e)
+        private static void BotOnReceiveError(object sender, ReceiveErrorEventArgs e)
         {
             Telegram.Log(e.ApiRequestException.Message);
-            //throw new NotImplementedException();
         }
         public static void ToPoolCallbackQueryReceived(Object ev)
         {
@@ -116,7 +116,7 @@ namespace PikaLoveBot
 
             }
         }
-        private static async void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs e)
+        private static void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs e)
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(ToPoolCallbackQueryReceived), e);            
         }
@@ -144,7 +144,6 @@ namespace PikaLoveBot
                     Telegram._base.Add(n);
                     string m = "Фото добавлено\r\nТеперь введите Ваш город, если он есть в базе\r\n\r\nЕсли его нет, то напишите нам в наш чат\r\nhttps://t.me/joinchat/Ci4beRGr_bq_7OMVm2EnZw";
                     SendMessageToUser(message.From.Id, m);
-                    Telegram.Log("New photo added");
                 }
             }
             catch//(Exception ex)
@@ -153,7 +152,7 @@ namespace PikaLoveBot
                 Telegram.SendMessageToUser(message.From.Id, "Что-то пошло не так\r\nПовторите попытку, пожалуйста");
             }
         }
-        private static async void AddPageInform(Message message)
+        private static void AddPageInform(Message message)
         {
             try
             { 
@@ -185,9 +184,10 @@ namespace PikaLoveBot
                 n.text = "";
             _base.Remove(u);
             _base.Add(n);
-            UserProfile.writeBase(_base);
+                UserProfile.AddUserToBaseXml(_base);
             SendMessageToUser(message.Chat.Id, "Город успешно установлен ;)");
             Telegram.Log("New user " + n.nickname + " added\r\nId - " + n.telegram);
+                MainFormPikaLoveBot.statistic.users++;
         }
    
             catch
@@ -244,76 +244,73 @@ namespace PikaLoveBot
                     createPage(e.Message);
                     break;
                 case MessageType.Text:
-                    if (e.Message.Text == "/start" || e.Message.Text == "Начать заново")
+                    switch (e.Message.Text)
                     {
-                        var keyboard = new ReplyKeyboardMarkup
-                        {
-                            Keyboard = new[] {
+                        case "/start":
+                        case "Начать заново":
+                            var keyboard = new ReplyKeyboardMarkup
+                            {
+                                Keyboard = new[] {
                                                 new[] // row 1
                                                 {
                                                     new KeyboardButton("Начать заново"),
                                                     new KeyboardButton("Краткая информация")
                                                 },
                                             },
-                            ResizeKeyboard = true
-                        };
-                        SendMessageToUser(e.Message.Chat.Id, "Добро пожаловать!", keyboard);
-                        InlineKeyboardMarkup k = new InlineKeyboardMarkup(
-                            new InlineKeyboardButton[]
-                            {
+                                ResizeKeyboard = true
+                            };
+                            SendMessageToUser(e.Message.Chat.Id, "Добро пожаловать!", keyboard);
+                            InlineKeyboardMarkup k = new InlineKeyboardMarkup(
+                                new InlineKeyboardButton[]
+                                {
                             InlineKeyboardButton.WithCallbackData("Украина"),
                             InlineKeyboardButton.WithCallbackData("Россия"),
                             InlineKeyboardButton.WithCallbackData("Белоруссия"),
                             InlineKeyboardButton.WithCallbackData("Казахстан")
-                            });
-                        SendMessageToUser( e.Message.Chat.Id, "Выбрать страну",  k);
-                        return;
-                    }
-                    if (e.Message.Text == "/Add")
-                    {
-                        SendMessageToUser(e.Message.From.Id, "Чтобы добавить профиль, перешлите мне своё фото :3, а после того, как бот подтвердит получение - введите город, к которому привязать аккаунт :3");
-                        return;
-                    }
-                    if (e.Message.Text == "/get")
-                    {
-                        if (Telegram._base.Exists(x => x.nickname == e.Message.From.Username && x.country != "" && x.country != null))
-                        {
-                            UserProfile prof = Telegram._base.Find(x => x.nickname == e.Message.From.Username);
-                            SendAnket(prof, e.Message.From.Id, prof.country + "&" + prof.town + "&" + prof.gender);
-                            return;
-                        }
-                        else
-                            SendMessageToUser(e.Message.From.Id, "Вас ещё нет у Нас в базе ;|\r\nВведите /Add , чтобы узнать как добавить себя :3");
-                        return;
-                    }
-                    if (e.Message.Text == "/chat")
-                    {
-                        SendMessageToUser(e.Message.Chat.Id, "Наш чат: \r\n https://t.me/joinchat/Ci4beRGr_bq_7OMVm2EnZw");
-                        return;
-                    }
-                    if (e.Message.Text == "Краткая информация")
-                    {
-                        SendMessageToUser(e.Message.Chat.Id, "Чтобы добавить свою анкету - отошлите боту своё фото >> дождитесь, пока бот его примет(может занять около 30 секунд >> привяжите фото к городу" +
-                            "\r\n Основные команды:" +
-                            "\r\n/add - даёт подсказку, как добавить свою анкету" +
-                            "\r\n/chat - даёт ссылку на чат бота, где Вы можете пообщаться или же внести предложения по работе бота" +
-                            "\r\n/get - проверить, есть ли Вы в базе" +
-                            "\r\n/start - Перезапуск бота");
-                        return;
-                    }
-                    if(AllTownsList.Exists(x => x == e.Message.Text))
-                        {  
-                        AddPageInform(e.Message);
-                        return;
+                                });
+                            SendMessageToUser(e.Message.Chat.Id, "Выбрать страну", k);
+                            break;
+                        case "/add":
+                            SendMessageToUser(e.Message.From.Id, "Чтобы добавить профиль, перешлите мне своё фото :3, а после того, как бот подтвердит получение - введите город, к которому привязать аккаунт :3");
+                            break;
+                        case "/get":
+                            if (Telegram._base.Exists(x => x.nickname == e.Message.From.Username && x.country != "" && x.country != null))
+                            {
+                                UserProfile prof = Telegram._base.Find(x => x.nickname == e.Message.From.Username);
+                                SendAnket(prof, e.Message.From.Id, prof.country + "&" + prof.town + "&" + prof.gender);
+                                return;
+                            }
+                            else
+                                SendMessageToUser(e.Message.From.Id, "Вас ещё нет у Нас в базе ;|\r\nВведите /Add , чтобы узнать как добавить себя :3");
+                            break;
+                        case "/chat":
+                            SendMessageToUser(e.Message.Chat.Id, "Наш чат: \r\n https://t.me/joinchat/Ci4beRGr_bq_7OMVm2EnZw");
+                            break;
+                        case "Краткая информация":
+                            SendMessageToUser(e.Message.Chat.Id, "Чтобы добавить свою анкету - отошлите боту своё фото >> дождитесь, пока бот его примет(может занять около 30 секунд >> привяжите фото к городу" +
+                                                    "\r\n Основные команды:" +
+                                                    "\r\n/add - даёт подсказку, как добавить свою анкету" +
+                                                    "\r\n/chat - даёт ссылку на чат бота, где Вы можете пообщаться или же внести предложения по работе бота" +
+                                                    "\r\n/get - проверить, есть ли Вы в базе" +
+                                                    "\r\n/start - Перезапуск бота");
+                            break;
+                        default:
+                            if (AllTownsList.Exists(x => x == e.Message.Text))
+                            {
+                                AddPageInform(e.Message);
+                                break;
+                            }
+                            else
+                                SendMessageToUser(e.Message.From.Id, "Попробуйте, пожалуйста, ещё раз. \r\nЧто-то пошло не так ;|");
+                            break;
                     }
                     break;
                 default:
                     SendMessageToUser(e.Message.From.Id, "Попробуйте, пожалуйста, ещё раз. \r\nЧто-то пошло не так ;|");
                     break;
             }
-
         }
-        private static async void BotOnMessageReceived(object sender, MessageEventArgs e)
+        private static void BotOnMessageReceived(object sender, MessageEventArgs e)
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(ToPoolMessageReceived), e);
         }

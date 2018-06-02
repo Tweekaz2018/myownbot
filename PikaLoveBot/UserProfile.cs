@@ -139,6 +139,7 @@ namespace PikaLoveBot
         {
             XDocument xdoc = new XDocument();
             xdoc.Add(new XElement("base"));
+            cleaner();
             foreach (UserProfile a in list)
             {
                 if (a.nickname.StartsWith("@")) a.nickname = a.nickname.Substring(1);
@@ -160,7 +161,7 @@ namespace PikaLoveBot
                     xdoc.Root.Add(user);
                     continue;
                 }
-                if (a.age != ""|| a.age != null)
+                if (a.age != "" || a.age != null)
                 {
                     XElement user = new XElement("user",
                         new XAttribute("nickname", a.nickname),
@@ -177,7 +178,58 @@ namespace PikaLoveBot
                 }
             }
             Random r = new Random();
-            System.IO.File.Copy("base-last.xml", "base-" + DateTime.Now.Day + "-" + DateTime.Now.Year + "-" + r.Next(999, 9999) + ".xml");
+            System.IO.File.Copy("base-last.xml", "base-" + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + "-" + r.Next(999, 9999) + ".xml");
+            xdoc.Save("base-last.xml");
+        }
+        public static void cleaner()
+        {
+            List<UserProfile> userProfiles = new List<UserProfile>();
+            userProfiles = Telegram._base.FindAll(x => x.telegram != null && x.nickname != null && x.photo_link != null && x.town != null).ToList();
+            Telegram._base = userProfiles;
+            Telegram.Log("Количество людей в базе теперь - " + userProfiles.Count);
+        }
+        public static void AddUserToBaseXml(List<UserProfile> list)
+        {
+            cleaner();
+            XDocument xdoc = new XDocument();
+            xdoc.Add(new XElement("base"));
+            foreach (UserProfile a in list)
+            {
+                if (a.nickname.StartsWith("@")) a.nickname = a.nickname.Substring(1);
+                if (a.age == "" || a.age == null)
+                {
+                    a.age = "";
+                    a.gender = "";
+                    XElement user = new XElement("user",
+                        new XAttribute("nickname", a.nickname),
+                        new XAttribute("photo_link", a.photo_link),
+                        new XAttribute("post_link", a.post_link),
+                        new XAttribute("country", a.country),
+                        new XAttribute("town", a.town),
+                        new XAttribute("telegram", a.telegram),
+                        new XAttribute("age", a.age),
+                        new XAttribute("gender", a.gender),
+                        new XAttribute("text", a.text)
+                        );
+                    xdoc.Root.Add(user);
+                    continue;
+                }
+                if (a.age != "" || a.age != null)
+                {
+                    XElement user = new XElement("user",
+                        new XAttribute("nickname", a.nickname),
+                        new XAttribute("photo_link", a.photo_link),
+                        new XAttribute("post_link", a.post_link),
+                        new XAttribute("country", a.country),
+                        new XAttribute("town", a.town),
+                        new XAttribute("telegram", a.telegram),
+                        new XAttribute("age", a.age),
+                        new XAttribute("gender", a.gender),
+                        new XAttribute("text", a.text)
+                        );
+                    xdoc.Root.Add(user);
+                }
+            }
             xdoc.Save("base-last.xml");
         }
         public async void getAgeGenderFromTelegramImage(Message message)

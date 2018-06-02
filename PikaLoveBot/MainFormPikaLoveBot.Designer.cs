@@ -41,11 +41,14 @@
             this.удалитьГородToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.статистикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.статистикаПоГородамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
             this.редактироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.поНикуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.поТелеграмЛогинуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.добавитьПустойГородToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.данныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.выгрузитьДанныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,7 +101,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.большеToolStripMenuItem,
             this.статистикаToolStripMenuItem,
-            this.редактироватьToolStripMenuItem});
+            this.редактироватьToolStripMenuItem,
+            this.данныеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(516, 24);
@@ -111,7 +115,8 @@
             this.добавитьГородToolStripMenuItem,
             this.полностьюОбновитьБазуToolStripMenuItem,
             this.удалитьЮзераToolStripMenuItem,
-            this.удалитьГородToolStripMenuItem});
+            this.удалитьГородToolStripMenuItem,
+            this.добавитьПустойГородToolStripMenuItem});
             this.большеToolStripMenuItem.Name = "большеToolStripMenuItem";
             this.большеToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.большеToolStripMenuItem.Text = "Больше...";
@@ -159,16 +164,6 @@
             this.статистикаПоГородамToolStripMenuItem.Text = "Статистика по городам";
             this.статистикаПоГородамToolStripMenuItem.Click += new System.EventHandler(this.статистикаПоГородамToolStripMenuItem_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(405, 99);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Обновить лог";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // редактироватьToolStripMenuItem
             // 
             this.редактироватьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -198,6 +193,38 @@
             this.поТелеграмЛогинуToolStripMenuItem.Name = "поТелеграмЛогинуToolStripMenuItem";
             this.поТелеграмЛогинуToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.поТелеграмЛогинуToolStripMenuItem.Text = "...по телеграм логину";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(405, 99);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(87, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Обновить лог";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // добавитьПустойГородToolStripMenuItem
+            // 
+            this.добавитьПустойГородToolStripMenuItem.Name = "добавитьПустойГородToolStripMenuItem";
+            this.добавитьПустойГородToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.добавитьПустойГородToolStripMenuItem.Text = "Добавить пустой город";
+            this.добавитьПустойГородToolStripMenuItem.Click += new System.EventHandler(this.добавитьПустойГородToolStripMenuItem_Click);
+            // 
+            // данныеToolStripMenuItem
+            // 
+            this.данныеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.выгрузитьДанныеToolStripMenuItem});
+            this.данныеToolStripMenuItem.Name = "данныеToolStripMenuItem";
+            this.данныеToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.данныеToolStripMenuItem.Text = "Данные...";
+            // 
+            // выгрузитьДанныеToolStripMenuItem
+            // 
+            this.выгрузитьДанныеToolStripMenuItem.Name = "выгрузитьДанныеToolStripMenuItem";
+            this.выгрузитьДанныеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.выгрузитьДанныеToolStripMenuItem.Text = "Выгрузить данные";
+            this.выгрузитьДанныеToolStripMenuItem.Click += new System.EventHandler(this.выгрузитьДанныеToolStripMenuItem_Click);
             // 
             // MainFormPikaLoveBot
             // 
@@ -243,6 +270,9 @@
         private System.Windows.Forms.ToolStripMenuItem редактироватьПользователяToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem поНикуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem поТелеграмЛогинуToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem добавитьПустойГородToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem данныеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem выгрузитьДанныеToolStripMenuItem;
     }
 }
 

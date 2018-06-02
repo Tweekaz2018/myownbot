@@ -21,7 +21,7 @@ namespace PikaLoveBot
             comboBox1.Items.Add("Белоруссия");
             comboBox1.Items.Add("Казахстан");
         }
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             Add();
         }
@@ -53,6 +53,7 @@ namespace PikaLoveBot
             this.Close();
             UserProfile.writeBase(Telegram._base);
             UserProfile.AddTownToSettings();
+            MainFormPikaLoveBot.statistic.towns++;
         }
     }
 }

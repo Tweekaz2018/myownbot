@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:PikaLoveBot1"
+"ProjectName" = "8:PikaLoveBot - Main"
 "LanguageId" = "3:1049"
 "CodePage" = "3:1251"
 "UILanguageId" = "3:1049"
@@ -15,18 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_027F03A84D91411B85EE91FE37C86FCA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_0F1E38CF07A7487DB81BEBBEA5B9EFF5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_325EC7E4AB51BF0AF83C46858A6C0DFC"
         "OwnerKey" = "8:_E8A865DF62A247F3BDBBA18AFC7B248D"
         "MsmSig" = "8:_UNDEFINED"
@@ -47,12 +35,6 @@
         {
         "MsmKey" = "8:_6E434B9E58C5EEF6C1C4B43A0EDC7E1A"
         "OwnerKey" = "8:_D377F1112367D8CF1E794F15488E4B67"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BE6BEFA0CA2147869118A1CE6FC09AE0"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -65,12 +47,6 @@
         {
         "MsmKey" = "8:_E8A865DF62A247F3BDBBA18AFC7B248D"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_325EC7E4AB51BF0AF83C46858A6C0DFC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -91,6 +67,12 @@
         "OwnerKey" = "8:_6E434B9E58C5EEF6C1C4B43A0EDC7E1A"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_325EC7E4AB51BF0AF83C46858A6C0DFC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -109,6 +91,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -125,6 +123,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -154,46 +160,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_027F03A84D91411B85EE91FE37C86FCA"
-            {
-            "SourcePath" = "8:..\\PikaLoveBot\\bin\\Debug\\stats.xml"
-            "TargetName" = "8:stats.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_24CCC0CBA26446E1A26962CA57080666"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0F1E38CF07A7487DB81BEBBEA5B9EFF5"
-            {
-            "SourcePath" = "8:..\\PikaLoveBot\\bin\\Debug\\settings.xml"
-            "TargetName" = "8:settings.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_24CCC0CBA26446E1A26962CA57080666"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_325EC7E4AB51BF0AF83C46858A6C0DFC"
             {
             "AssemblyRegister" = "3:1"
@@ -256,26 +222,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BE6BEFA0CA2147869118A1CE6FC09AE0"
-            {
-            "SourcePath" = "8:..\\PikaLoveBot\\bin\\Debug\\base-last.xml"
-            "TargetName" = "8:base-last.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_24CCC0CBA26446E1A26962CA57080666"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D377F1112367D8CF1E794F15488E4B67"
             {
             "AssemblyRegister" = "3:1"
@@ -323,17 +269,6 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_116F77F084BE41EF939539FE1580CF58"
-                    {
-                    "Name" = "8:photos"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_95F3E89462674589BC64E4A0445F7ADC"
-                        "Folders"
-                        {
-                        }
-                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_2ADDC522145B4D19ACA060A7627651AE"
@@ -375,7 +310,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PikaLoveBot1"
         "ProductCode" = "8:{3DEC72B9-32D3-4549-9309-7802861E9AFF}"
-        "PackageCode" = "8:{0BFDBDD0-8AA9-46E6-B777-56A3B970D5EE}"
+        "PackageCode" = "8:{B11A4D8D-BC09-41B2-974D-91648FC25B9C}"
         "UpgradeCode" = "8:{B2C447D0-EB58-48A5-B251-DC681B3F5251}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
