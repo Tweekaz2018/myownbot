@@ -23,15 +23,15 @@ namespace PikaLoveBot
         public static List<string> rus = new List<string> { "Челябинск", "Калининград", "Алматы", "Екатеринбург", "Краснодар", "Саратов", "Иркутск", "Самара", "Ярославль", "Воронеж", "Ростов", "Петербург", "Тольятти", "Тюмень", "Омск", "Чебоксары", "Оренбург", "Уфа", "Астрахань", "Тула", "Пермь", "Новороссийск", "Киров", "Сочи", "Казань" };
         public static List<string> kz = new List<string>();
 
-        public string nickname;
-        public string photo_link;
-        public string post_link;
-        public string country;
-        public string town;
-        public string telegram;
-        public string age;
-        public string gender;
-        public string text;
+        public string nickname = "";
+        public string photo_link= "";
+        public string post_link = "";
+        public string country = "";
+        public string town = "";
+        public string telegram = "";
+        public string age = "";
+        public string gender = "";
+        public string text = "";
         public UserProfile(string nick, string photo, string post, string count, string to, string tel, string a, string gen, string tex)
         {
             nickname = nick;

@@ -124,18 +124,29 @@ namespace PikaLoveBot
         {
             try
             {
-                if (Telegram._base.Exists(x => x.telegram == message.From.Id.ToString()) != true)
+                if (_base.Exists(x => x.telegram == message.From.Id.ToString() || x.telegram == message.From.Username) == true)
+                {
+                    UserProfile profile = _base.Find(x => x.telegram == message.From.Id.ToString() || x.telegram == message.From.Username);
+                    var file = await Bot.GetFileAsync(message.Photo.Last()?.FileId);
+                    profile.photo_link = file.FilePath;
+                    _base.Remove(_base.Find(x => x.telegram == message.From.Id.ToString() || x.telegram == message.From.Username));
+                    _base.Add(profile);
+                    SendMessageToUser(message.From.Id, "Фото обновлено");
+                }
+                else
                 {
                     UserProfile n = new UserProfile();
                     var file = await Bot.GetFileAsync(message.Photo.Last()?.FileId);
+                    n.photo_link = file.FilePath;
+                    
                     n.nickname = "Никнейм не установлен";
                     if (message.From.Username != null)
                         n.nickname = message.From.Username;
                     n.telegram = message.From.Id.ToString();
-                    n.photo_link = file.FilePath;
+                    await Bot.SendChatActionAsync(message.From.Id, ChatAction.Typing);
                     n.getAgeGenderFromTelegramImage(message);
                     Thread.Sleep(1000);
-                    if(n.age == null)
+                    if (n.age == null)
                     {
                         Thread.Sleep(20050);
                         await Bot.SendChatActionAsync(message.From.Id, ChatAction.Typing);
@@ -156,7 +167,7 @@ namespace PikaLoveBot
         {
             try
             { 
-            UserProfile u = Telegram._base.Find(x => x.telegram == message.From.Id.ToString());
+            UserProfile u = Telegram._base.Find(x => x.telegram == message.From.Id.ToString() || x.telegram == message.From.Username);
             UserProfile n = u;
             if (u == null)
             {
@@ -200,7 +211,7 @@ namespace PikaLoveBot
         private static async void SendAnket(UserProfile userProfile, int id, string query)
         {
             try
-            {
+            {///////////////////////////////////////////////////////////////////////////////
                 string gender = "парень";
                 if (userProfile.gender == "female")
                     gender = "девушка";
@@ -217,13 +228,11 @@ namespace PikaLoveBot
                 }
                 else
                 {
-                    string filename = userProfile.photo_link;
-
-                    using (var saveImageStream = System.IO.File.Open(filename, FileMode.Create))
+                    using (var saveImageStream = System.IO.File.Open(userProfile.photo_link, FileMode.Create))
                     {
                         await Bot.DownloadFileAsync(userProfile.photo_link, saveImageStream);
                     }
-                    s = new StreamReader(filename).BaseStream;
+                    s = new StreamReader(userProfile.photo_link).BaseStream;
                 }
                 await Bot.SendPhotoAsync(id, new InputOnlineFile(s), message, ParseMode.Html, false, 0, NextKey(query, userProfile));
                 s.Close();
@@ -299,6 +308,22 @@ namespace PikaLoveBot
                             {
                                 AddPageInform(e.Message);
                                 break;
+                            }
+                            else if (int.TryParse(e.Message.Text, out int num))
+                            {
+                                try
+                                {
+                                    UserProfile profile = Telegram._base.Find(x => x.telegram == e.Message.From.Id.ToString() || x.telegram == e.Message.From.Username);
+                                    profile.age = num.ToString();
+                                    _base.Remove(_base.Find(x => x.telegram == e.Message.From.Id.ToString() || x.telegram == e.Message.From.Username));
+                                    _base.Add(profile);
+                                    SendMessageToUser(e.Message.From.Id, "Ваш возраст изменен");
+                                    
+                                }
+                                catch
+                                {
+                                    SendMessageToUser(e.Message.From.Id, "Вы, похоже, ещё не с нами. Введите /add, чтобы увидеть, как присоединиться");
+                                }
                             }
                             else
                                 SendMessageToUser(e.Message.From.Id, "Попробуйте, пожалуйста, ещё раз. \r\nЧто-то пошло не так ;|");

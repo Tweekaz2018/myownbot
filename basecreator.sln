@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PikaLoveBot", "PikaLoveBot\PikaLoveBot.csproj", "{50F2C703-E9ED-4B39-A432-42DB59020ABD}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PikaLoveBot1", "PikaLoveBot1\PikaLoveBot1.vdproj", "{D4447FBF-737C-4BE7-B8B5-198BB5AC0210}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PikaLoveBot - Main", "PikaLoveBot1\PikaLoveBot1.vdproj", "{D4447FBF-737C-4BE7-B8B5-198BB5AC0210}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

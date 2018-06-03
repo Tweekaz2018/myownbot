@@ -153,6 +153,7 @@ namespace PikaLoveBot
             {
                 XDocument xdoc = new XDocument();
                 xdoc.Add(new XElement("base"));
+                acs._acs = acs._acs.Distinct().ToList();
                 foreach (acs a in acs._acs)
                 {
                     xdoc.Root.Add(new XElement("user", new XAttribute("name", a.name), new XAttribute("counter", a.countOfRequests), new XAttribute("isAlive", a.hasAnket), new XAttribute("id", a.id)));
